@@ -15,6 +15,7 @@ const db = require("./models");
 
 const guestCtrl = require("./controllers/guestController");
 const userCtrl = require("./controllers/userController");
+const sessionCtrl = require("./controllers/sessionsController");
 
 // Create express app
 const app = express();
@@ -45,6 +46,14 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use("/guests", guestCtrl);
+app.use("/users", userCtrl);
+app.use("/sessions", sessionCtrl);
+
+app.get("*", function (req, res) {
+  res.send("Invalid path");
+});
 
 app.listen(PORT, () => {
   console.log(`Server is live on port ${PORT}`);
