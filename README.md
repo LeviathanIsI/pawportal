@@ -85,7 +85,8 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 * ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 * ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 * ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
-* 
+* ![image](https://github.com/LeviathanIsI/barkbase/assets/64034102/65f34fee-71c3-449c-a713-f3ef011d1ce8)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
