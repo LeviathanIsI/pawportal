@@ -9,7 +9,8 @@
     "livereload": "^0.9.3",
     "method-override": "^3.0.0",
     "mongoose": "^8.2.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "passport": "^0.7.0"
   },
   "scripts": {
     "start": "node server.js"
@@ -18,7 +19,6 @@
   "description": "<!-- PROJECT SHIELDS -->\r <!--\r *** I'm using markdown \"reference style\" links for readability.\r *** Reference links are enclosed in brackets [ ] instead of parentheses ( ).\r *** See the bottom of this document for the declaration of the reference variables\r *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.\r *** https://www.markdownguide.org/basic-syntax/#reference-style-links\r -->\r [![Contributors][contributors-shield]][contributors-url]\r [![Forks][forks-shield]][forks-url]\r [![Stargazers][stars-shield]][stars-url]\r [![Issues][issues-shield]][issues-url]\r [![MIT License][license-shield]][license-url]\r [![LinkedIn][linkedin-shield]][linkedin-url]",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "keywords": [],
   "author": "",
   "license": "ISC"

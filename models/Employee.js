@@ -8,7 +8,7 @@ const EmployeeSchema = User.discriminator(
   new mongoose.Schema(
     {
       employeeID: { type: Number, required: true, unique: true },
-      role: { type: String, default: "Employee" },
+      role: { type: String, default: "Admin" },
       startDate: { type: Date, default: Date.now },
       caringFor: [
         {
