@@ -6,7 +6,7 @@ mongoose
   .connect(process.env.MONGODBURI)
   .then(() => console.log(`Connected to MongoDB at ${db.host}:${db.port}`))
   .catch((err) => console.log(err));
-  
+
 const db = mongoose.connection;
 
 module.exports = {
