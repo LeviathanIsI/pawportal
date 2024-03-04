@@ -7,6 +7,11 @@
             Password: <input type="password" name="password" required>
             First Name: <input type="text" name="firstName" required>
             Last Name: <input type="text" name="lastName" required>
+            Account Type: <select id="accountType" name="kind">
+                <option value="">Select Account Type</option>
+                <option value="Guest">Pet Parent</option>
+                <option value="Employee">Business Owner</option>
+            </select>
             <input type="submit" value="Sign Up">
 
             <% include("../partials/footer.ejs") %>
