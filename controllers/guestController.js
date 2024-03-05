@@ -1,9 +1,30 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const db = require("../models");
+const isAuthenticated = require("./isAuthenticated");
+const checkEmployee = require("./isUser");
 
-router.get("/signup", (req, res) => {
-  res.render("users/signup");
+// I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
+
+// Index Route
+router.get("/home", isAuthenticated, (req, res) => {
+  res.render("users/guest/homeGuest.ejs", {
+    currentUser: req.session.currentUser,
+  });
 });
+
+// New Route
+// Handled in server.js
+
+// Delete Route
+
+// Update Route
+
+// Create Route
+// Handled in server.js
+
+// Edit Route
+
+// Show Route
 
 module.exports = router;

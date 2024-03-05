@@ -9,16 +9,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/users/signup">Sign Up</a>
+                        <a class="nav-link active" aria-current="page" href="/signup">Sign Up</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/sessions/login">Log In</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto"> <!-- This ul is pushed to the right -->
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <p class="nav-link" id="welcome">Welcome, <%= currentUser.userName %>
-                        </p>
+                        <% if (currentUser && currentUser.userName) { %>
+                            <p class="nav-link" id="welcome">Welcome, <%= currentUser.userName %>
+                            </p>
+                            <% } else { %>
+                                <p class="nav-link">Welcome, Guest</p>
+                                <% } %>
                     </li>
                 </ul>
             </div>

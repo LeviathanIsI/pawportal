@@ -1,17 +1,42 @@
 <%- include("../partials/header.ejs") %>
     <%- include("../partials/nav.ejs") %>
         <h2>Sign Up</h2>
-        <form action="/users" method="POST">
-            Username: <input type="text" name="userName" required>
-            Email: <input type="text" name="email" required>
-            Password: <input type="password" name="password" required>
-            First Name: <input type="text" name="firstName" required>
-            Last Name: <input type="text" name="lastName" required>
-            Account Type: <select id="accountType" name="kind">
-                <option value="">Select Account Type</option>
-                <option value="Guest">Pet Parent</option>
-                <option value="Employee">Business Owner</option>
-            </select>
-            <input type="submit" value="Sign Up">
-
-            <% include("../partials/footer.ejs") %>
+        <form class="row g-3" action="/" method="POST">
+            <div class="col-md-6">
+                <label for="userName" class="form-label">Username</label>
+                <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter your username"
+                    required>
+            </div>
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
+                    required>
+            </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    placeholder="Enter your password" required>
+            </div>
+            <div class="col-md-6">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName"
+                    placeholder="Enter your first name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name"
+                    required>
+            </div>
+            <div class="col-md-6">
+                <label for="accountType" class="form-label">Account Type</label>
+                <select id="accountType" name="kind" class="form-select" required>
+                    <option value="">Select Account Type</option>
+                    <option value="Guest">Pet Parent</option>
+                    <option value="Employee">Business Owner</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+        </form>
+        <% include("../partials/footer.ejs") %>

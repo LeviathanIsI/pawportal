@@ -7,11 +7,21 @@ const connectLivereload = require("connect-livereload");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require("express-session");
+const bcrypt = require("bcrypt");
 
 const PORT = process.env.PORT || 3000;
 
 // Require db connection and models
 const db = require("./models");
+
+// Function to generate a random employee ID
+const generateEmployeeID = () => Math.floor(Math.random() * 1000);
+
+// Function to check if the employee ID is unique
+const isUniqueEmployeeID = async (employeeID) => {
+  const employee = await db.Employee.findOne({ employeeID: employeeID });
+  return !employee;
+};
 
 const guestCtrl = require("./controllers/guestController");
 const userCtrl = require("./controllers/userController");
@@ -47,10 +57,65 @@ app.use(
   })
 );
 
-app.use("/guests", guestCtrl);
-app.use("/users", userCtrl);
+app.use("/guest", guestCtrl);
+app.use("/employee", userCtrl);
 app.use("/sessions", sessionCtrl);
 
+// I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
+
+// Index Route
+app.get("/", (req, res) => {
+  res.render("home.ejs", {
+    currentUser: req.session.currentUser || null,
+  });
+});
+
+// New Route
+app.get("/signup", (req, res) => {
+  if (!req.session.currentUser)
+    res.render("users/signup.ejs", { currentUser: req.session.currentUser });
+});
+
+// Delete Route
+
+// Update Route
+
+// Create Route
+app.post("/", async (req, res) => {
+  try {
+    req.body.password = await bcrypt.hash(
+      req.body.password,
+      bcrypt.genSaltSync(10)
+    );
+
+    if (req.body.kind === "Employee") {
+      let employeeID = generateEmployeeID();
+      let unique = await isUniqueEmployeeID(employeeID);
+
+      while (!unique) {
+        employeeID = generateEmployeeID();
+        unique = await isUniqueEmployeeID(employeeID);
+      }
+      req.body.employeeID = employeeID;
+    }
+    const newUser = await db.User.create(req.body);
+    req.session.currentUser = newUser;
+    if (newUser.kind === "Employee") {
+      return res.redirect("/employee/home");
+    } else {
+      return res.redirect("/guest/home");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error creating user. Please try again.");
+  }
+});
+
+// Edit Route
+
+// Show Route
+
+// Catch-all
 app.get("*", function (req, res) {
   res.send("Invalid path");
 });
