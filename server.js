@@ -7,6 +7,7 @@ const connectLivereload = require("connect-livereload");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const bcrypt = require("bcrypt");
 
 const PORT = process.env.PORT || 3000;
@@ -54,6 +55,10 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODBURI }),
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000,
+    },
   })
 );
 

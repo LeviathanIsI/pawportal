@@ -14,14 +14,14 @@ router.get("/home", isAuthenticated, checkEmployee, (req, res) => {
 });
 
 // New Route
-// Handled in server.js
+// Initial user creation handled in server.js
 
 // Delete Route
 
 // Update Route
 
 // Create Route
-// Handled in server.js
+// Initial user creation handled in server.js
 
 // Edit Route
 

@@ -14,16 +14,21 @@ router.get("/home", isAuthenticated, (req, res) => {
 });
 
 // New Route
-// Handled in server.js
+// Initial user creation handled in server.js
 
 // Delete Route
 
 // Update Route
 
 // Create Route
-// Handled in server.js
+// Initial user creation handled in server.js
 
 // Edit Route
+router.get("/settings", isAuthenticated, (req, res) => {
+  res.render("users/guest/settingsGuest.ejs", {
+    currentUser: req.session.currentUser,
+  });
+});
 
 // Show Route
 

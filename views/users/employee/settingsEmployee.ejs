@@ -1,0 +1,17 @@
+<%- include("../../partials/header.ejs") %>
+    <%- include("../../partials/nav.ejs") %>
+        <h1>Guest Settings</h1>
+        <div class="settingsleft">
+            <ul class="list-group">
+                <li class="list-group-item">Name <%= currentUser.userName %>
+                </li>
+                <li class="list-group-item">Email <%= currentUser.email %>
+                </li>
+                <li class="list-group-item">Residential Address <a href="/">Edit</a></li>
+                <li class="list-group-item">Registered Pets <a href="/">Add Pets</a></li>
+                <li class="list-group-item">
+                    <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
+                </li>
+            </ul>
+        </div>
+        <% include("../../partials/footer.ejs") %>

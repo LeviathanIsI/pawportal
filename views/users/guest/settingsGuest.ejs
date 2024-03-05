@@ -1,0 +1,49 @@
+<%- include("../../partials/header.ejs") %>
+    <%- include("../../partials/nav.ejs") %>
+        <h1>Settings</h1>
+        <div class="settingsleft">
+            <ul class="list-group">
+                <li class="list-group-item">Name <%= currentUser.userName %>
+                </li>
+                <li class="list-group-item">Email <%= currentUser.email %>
+                </li>
+                <li class="list-group-item">Residential Address <%= currentUser.address %> <a href="#"
+                            onclick="openForm()">Edit</a>
+                </li>
+                <li class="list-group-item">Registered Pets <a href="/">Add Pets</a></li>
+                <li class="list-group-item">
+                    <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
+                </li>
+                <li class="list-group-item">
+                    <form action="/sessions/logout?_method=DELETE" method="POST">
+                        <button type="submit" class="signout btn btn-default">
+                            <strong>Sign Out</strong>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Pop-up Form Container for Residential Address -->
+        <div id="popupForm" class="popup-container" style="display:none;">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closeForm()">&times;</span>
+                <h2>Update Residential Address</h2>
+                <form id="updateAddressForm">
+                    <label for="address">New Address:</label>
+                    <input type="text" id="address" name="address" required>
+                    <button type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+        <% include("../../partials/footer.ejs") %>
+
+            <script>
+                function openForm() {
+                    document.getElementById("popupForm").style.display = "block";
+                }
+
+                function closeForm() {
+                    document.getElementById("popupForm").style.display = "none";
+                }
+            </script>

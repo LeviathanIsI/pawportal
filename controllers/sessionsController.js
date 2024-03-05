@@ -10,6 +10,12 @@ router.get("/login", (req, res) => {
   });
 });
 
+router.delete("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/home");
+  });
+});
+
 router.post("/", async (req, res) => {
   try {
     const foundUser = await User.findOne({ userName: req.body.username });
