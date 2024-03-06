@@ -1,17 +1,30 @@
 <%- include("../../partials/header.ejs") %>
     <%- include("../../partials/nav.ejs") %>
-        <h1>Guest Settings</h1>
-        <div class="settingsleft">
-            <ul class="list-group">
-                <li class="list-group-item">Name <%= currentUser.userName %>
-                </li>
-                <li class="list-group-item">Email <%= currentUser.email %>
-                </li>
-                <li class="list-group-item">Residential Address <a href="/">Edit</a></li>
-                <li class="list-group-item">Registered Pets <a href="/">Add Pets</a></li>
-                <li class="list-group-item">
-                    <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
-                </li>
-            </ul>
+        <div class="container mt-4">
+            <h2>Add New Pet</h2>
+            <form action="/path-to-your-post-route" method="POST">
+                <div class="form-group">
+                    <label for="petName">Pet Name</label>
+                    <input type="text" class="form-control" id="petName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="species">Species</label>
+                    <input type="text" class="form-control" id="species" name="species" required>
+                </div>
+                <div class="form-group">
+                    <label for="breed">Breed</label>
+                    <input type="text" class="form-control" id="breed" name="breed" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" id="age" name="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight</label>
+                    <input type="number" class="form-control" id="weight" name="weight" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Pet</button>
+            </form>
         </div>
+
         <% include("../../partials/footer.ejs") %>
