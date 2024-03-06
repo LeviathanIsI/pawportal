@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const db = require("../models");
+const isAuthenticated = require("./isAuthenticated");
 
 // I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
 
 // Index Route
 
-
 // New Route
-router.get("/pet/add", isAuthenticated, checkEmployee, (req, res) => {
+router.get("/pet/add", isAuthenticated, (req, res) => {
   res.render("users/guest/petsGuest.ejs", {
     currentUser: req.session.currentUser,
   });
@@ -19,7 +19,7 @@ router.get("/pet/add", isAuthenticated, checkEmployee, (req, res) => {
 // Update Route
 
 // Create Route
-router.get("/pet/add", isAuthenticated, checkEmployee, (req, res) => {
+router.get("/pet/add", isAuthenticated, (req, res) => {
   res.render("users/guest/petsGuest.ejs", {
     currentUser: req.session.currentUser,
   });

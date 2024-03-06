@@ -1,0 +1,30 @@
+<%- include("../../partials/header.ejs") %>
+    <%- include("../../partials/guestNav.ejs") %>
+        <div class="container mt-4">
+            <h2>Add New Pet</h2>
+            <form action="/guest/pets/add" method="POST">
+                <div class="form-group">
+                    <label for="petName">Pet Name</label>
+                    <input type="text" class="form-control" id="petName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="species">Species</label>
+                    <input type="text" class="form-control" id="species" name="species" required>
+                </div>
+                <div class="form-group">
+                    <label for="breed">Breed</label>
+                    <input type="text" class="form-control" id="breed" name="breed" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" id="age" name="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight</label>
+                    <input type="number" class="form-control" id="weight" name="weight" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Pet</button>
+            </form>
+        </div>
+
+        <% include("../../partials/footer.ejs") %>

@@ -1,5 +1,5 @@
 <%- include("../../partials/header.ejs") %>
-    <%- include("../../partials/nav.ejs") %>
+    <%- include("../../partials/guestNav.ejs") %>
         <div class="settingsleft">
             <h1>Settings</h1>
             <ul class="list-group">
@@ -18,8 +18,26 @@
                         <%= currentUser.address %>
                     </span> <a href="#" onclick="openForm()">Edit</a>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">Registered Pets <a
-                        href="/">Add Pets</a></li>
+                <li class="list-group-item">
+                    Registered Pets
+                    <% if (currentUser.pets && currentUser.pets.length> 0) { %>
+                        <ul>
+                            <% currentUser.pets.forEach(function(pet) { %>
+                                <li>
+                                    <%= pet.name %>
+                                        <form action="/guest/pets/<%= pet._id %>?_method=DELETE" method="POST">
+                                            <input type="submit" value="DELETE">
+                                        </form>
+                                </li>
+                                <% }); %>
+                        </ul>
+                        <% } else { %>
+                            <span class="ms-auto">No pets registered</span>
+                            <% } %>
+                                <a href="/guest/pets/add">Add Pets</a>
+                </li>
+
+
                 <li class="list-group-item">
                     <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
                 </li>
@@ -55,4 +73,34 @@
                 function closeForm() {
                     document.getElementById("popupForm").style.display = "none";
                 }
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.getElementById("updateAddressForm").addEventListener("submit", function (event) {
+                        event.preventDefault();
+
+                        const formData = new FormData(this);
+                        const address = formData.get("address");
+                        const data = { address: address };
+
+                        fetch("/guest/settings", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log(data);
+                                closeForm();
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                    });
+                });
             </script>
