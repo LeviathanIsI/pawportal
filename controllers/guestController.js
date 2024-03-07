@@ -15,6 +15,16 @@ router.get("/home", isAuthenticated, (req, res) => {
   });
 });
 
+// Settings Index
+router.get("/settings", isAuthenticated, async (req, res) => {
+  const currentUser = await db.Guest.findById(
+    req.session.currentUser._id
+  ).populate("pets");
+  res.render("users/guest/settingsGuest.ejs", {
+    currentUser: currentUser.toObject(),
+  });
+});
+
 // New Route
 // Initial user creation handled in server.js
 
@@ -28,7 +38,6 @@ router.get("/pets/add", isAuthenticated, (req, res) => {
 // Delete Route
 router.delete("/pets/:petId", isAuthenticated, async (req, res) => {
   const { petId } = req.params;
-  console.log(req.params.petId);
   try {
     // Remove the pet from the Pets collection
     await db.Pet.findOneAndDelete({ _id: petId });
@@ -38,7 +47,14 @@ router.delete("/pets/:petId", isAuthenticated, async (req, res) => {
       $pull: { pets: petId },
     });
 
-    res.redirect("/guest/settings");
+    const updatedGuest = await db.Guest.findById(
+      req.session.currentUser._id
+    ).populate("pets");
+    req.session.currrentUser = updatedGuest;
+
+    res
+      .status(200)
+      .json({ success: true, message: "Pet deleted successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).redirect("/guest/home");
@@ -82,6 +98,33 @@ router.post("/pets/add", isAuthenticated, async (req, res) => {
 
     req.session.currentUser = updatedGuest;
 
+    res.redirect("/guest/settings");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error creating pet. Please try again.");
+  }
+});
+
+// Create route for adding a pet
+router.post("/pets/add", isAuthenticated, async (req, res) => {
+  const { name, species, breed, age, weight } = req.body;
+  try {
+    const newPet = await db.Pet.create({
+      name,
+      species,
+      breed,
+      age,
+      weight,
+    });
+
+    const updatedGuest = await db.Guest.findByIdAndUpdate(
+      req.session.currentUser._id,
+      { $push: { pets: newPet._id } },
+      { new: true }
+    ).populate("pets");
+
+    req.session.currentUser = updatedGuest;
+
     res.redirect("/settings");
   } catch (error) {
     console.log(error);
@@ -95,7 +138,6 @@ router.get("/settings", isAuthenticated, (req, res) => {
     currentUser: req.session.currentUser,
     pets: req.session.currentUser.pets,
   });
-  console.log(req.session.currentUser.pets);
 });
 
 // Show Route

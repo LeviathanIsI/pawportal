@@ -8,22 +8,12 @@ const isAuthenticated = require("./isAuthenticated");
 // Index Route
 
 // New Route
-router.get("/pet/add", isAuthenticated, (req, res) => {
-  res.render("users/guest/petsGuest.ejs", {
-    currentUser: req.session.currentUser,
-  });
-});
 
 // Delete Route
 
 // Update Route
 
 // Create Route
-router.get("/pet/add", isAuthenticated, (req, res) => {
-  res.render("users/guest/petsGuest.ejs", {
-    currentUser: req.session.currentUser,
-  });
-});
 
 // Edit Route
 

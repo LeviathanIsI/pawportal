@@ -23,11 +23,9 @@
                     <% if (currentUser.pets && currentUser.pets.length> 0) { %>
                         <ul>
                             <% currentUser.pets.forEach(function(pet) { %>
-                                <li>
+                                <li id="petItem_<%= pet._id %>">
                                     <%= pet.name %>
-                                        <form action="/guest/pets/<%= pet._id %>?_method=DELETE" method="POST">
-                                            <input type="submit" value="DELETE">
-                                        </form>
+                                        <button class="deletePetBtn" data-pet-id="<%= pet._id %>">DELETE</button>
                                 </li>
                                 <% }); %>
                         </ul>
@@ -101,6 +99,30 @@
                             .catch((error) => {
                                 console.error('Error:', error);
                             });
+                    });
+                });
+            </script>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelectorAll('.deletePetBtn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const petId = this.getAttribute('data-pet-id');
+                            fetch(`/guest/pets/${petId}`, {
+                                method: 'DELETE',
+                                credentials: "include"
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        // Remove the pet element from the DOM
+                                        document.getElementById(`petItem_${petId}`).remove();
+                                    } else {
+                                        // Handle failure
+                                        alert('Failed to delete the pet. Please try again.');
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
                     });
                 });
             </script>
