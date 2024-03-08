@@ -79,6 +79,13 @@ app.get("/", (req, res) => {
 app.get("/signup", (req, res) => {
   if (!req.session.currentUser)
     res.render("users/signup.ejs", { currentUser: req.session.currentUser });
+  else {
+    if (req.session.currentUser.kind === "Guest") {
+      res.redirect("/guest/home");
+    } else {
+      res.redirect("/employee/home");
+    }
+  }
 });
 
 // Delete Route

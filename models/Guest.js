@@ -9,6 +9,9 @@ const GuestSchema = User.discriminator(
     {
       phoneNumber: String,
       address: String,
+      city: String,
+      state: String,
+      zip: String,
       pets: [
         {
           type: Schema.Types.ObjectId,

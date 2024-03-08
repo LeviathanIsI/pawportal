@@ -29,7 +29,7 @@ router.get("/settings", isAuthenticated, async (req, res) => {
 // Initial user creation handled in server.js
 
 // New Route for adding a pet
-router.get("/pets/add", isAuthenticated, (req, res) => {
+router.get("/home/add", isAuthenticated, (req, res) => {
   res.render("users/guest/addpetGuest.ejs", {
     currentUser: req.session.currentUser,
   });
@@ -50,7 +50,7 @@ router.delete("/pets/:petId", isAuthenticated, async (req, res) => {
     const updatedGuest = await db.Guest.findById(
       req.session.currentUser._id
     ).populate("pets");
-    req.session.currrentUser = updatedGuest;
+    req.session.currentUser = updatedGuest;
 
     res
       .status(200)
@@ -63,12 +63,38 @@ router.delete("/pets/:petId", isAuthenticated, async (req, res) => {
 
 // Update Route
 router.post("/settings", isAuthenticated, async (req, res) => {
-  const { address } = req.body;
+  const { address, city, state, zip } = req.body;
   const userId = req.session.currentUser._id;
 
   try {
-    await Guest.findByIdAndUpdate(userId, { address: address });
-    res.json({ success: true, message: "Address updated successfully!" });
+    const updatedGuest = await Guest.findByIdAndUpdate(
+      userId,
+      {
+        address,
+        city,
+        state,
+        zip,
+      },
+      { new: true } // Note to self: { new: true } is necessary to return the updated document to display on page without needing to refresh
+    );
+
+    // Update the session information
+    req.session.currentUser = {
+      ...req.session.currentUser,
+      address,
+      city,
+      state,
+      zip,
+    };
+
+    // Respond with the updated address information
+    res.json({
+      success: true,
+      address: updatedGuest.address,
+      city: updatedGuest.city,
+      state: updatedGuest.state,
+      zip: updatedGuest.zip,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "An error occurred" });
@@ -98,34 +124,7 @@ router.post("/pets/add", isAuthenticated, async (req, res) => {
 
     req.session.currentUser = updatedGuest;
 
-    res.redirect("/guest/settings");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error creating pet. Please try again.");
-  }
-});
-
-// Create route for adding a pet
-router.post("/pets/add", isAuthenticated, async (req, res) => {
-  const { name, species, breed, age, weight } = req.body;
-  try {
-    const newPet = await db.Pet.create({
-      name,
-      species,
-      breed,
-      age,
-      weight,
-    });
-
-    const updatedGuest = await db.Guest.findByIdAndUpdate(
-      req.session.currentUser._id,
-      { $push: { pets: newPet._id } },
-      { new: true }
-    ).populate("pets");
-
-    req.session.currentUser = updatedGuest;
-
-    res.redirect("/settings");
+    res.redirect("/guest/home");
   } catch (error) {
     console.log(error);
     res.status(500).send("Error creating pet. Please try again.");
@@ -141,5 +140,13 @@ router.get("/settings", isAuthenticated, (req, res) => {
 });
 
 // Show Route
+router.get("/pets/:petId", isAuthenticated, async (req, res) => {
+  const { petId } = req.params;
+  const pet = await db.Pet.findById(petId);
+  res.render("users/guest/petGuestShow.ejs", {
+    currentUser: req.session.currentUser,
+    pet: pet,
+  });
+});
 
 module.exports = router;

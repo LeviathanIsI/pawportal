@@ -1,33 +1,30 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/guest/home">Home</a>
-        <!-- Hardcoded for testing, need to change to dynamic -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/signup">Sign Up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/sessions/login">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/guest/settings">Settings</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <% if (currentUser && currentUser.userName) { %>
-                        <p class="nav-link" id="welcome">Welcome, <%= currentUser.userName %>
-                        </p>
-                        <% } else { %>
-                            <p class="nav-link">Welcome, Guest</p>
-                            <% } %>
-                </li>
-            </ul>
-        </div>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/guest/settings">Settings</a>
+            </li>
+            <li class="nav-item">
+                <form action="/sessions/login" class="form-inline">
+                    <button type="submit" class="btn btn-default">Login</button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <% if (currentUser && currentUser.userName) { %>
+                    <span class="nav-link">Welcome back, <strong>
+                            <%= currentUser.userName %>
+                        </strong></span>
+                    <% } else { %>
+                        <span class="nav-link">Welcome, <strong>Guest</strong></span>
+                        <% } %>
+            </li>
+        </ul>
+    </div>
     </div>
 </nav>

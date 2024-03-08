@@ -1,4 +1,69 @@
 <%- include("../../partials/header.ejs") %>
     <%- include("../../partials/guestNav.ejs") %>
-        <h1>Guest Home</h1>
+        <div class="container mt-5">
+            <h1 class="text-center mb-3">Welcome To Your Custom Pet Portal</h1>
+            <h2 class="text-center mb-4">Where you can manage your pets and their needs.</h2>
+        </div>
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="mb-4">Registered Pets</h3>
+                    <% if (currentUser.pets && currentUser.pets.length> 0) { %>
+                        <ul class="list-group mb-4">
+                            <% currentUser.pets.forEach(function(pet) { %>
+                                <li class="list-group-item d-flex justify-content-between align-items-center"
+                                    id="petItem_<%= pet._id %>">
+                                    <a href="/guest/pets/<%= pet._id %>" class="pet-link btn btn-info">
+                                        <%= pet.name %>
+                                    </a>
+                                    <button class="deletePetBtn" data-pet-id="<%= pet._id %>">DELETE</button>
+                                </li>
+                                <% }); %>
+                        </ul>
+                        <% } else { %>
+                            <ul class="list-group mb-4">
+                                <li class="list-group-item">No Registered Pets</li>
+                            </ul>
+                            <% } %>
+                                <div class="button-container">
+                                    <button type="button" onclick="location.href='/guest/home/add'"
+                                        class="btn btn-primary btn-sm">Add Pets</button>
+                                </div>
+                </div>
+            </div>
+        </div>
+
         <% include("../../partials/footer.ejs") %>
+
+            <!-- // Script for handling pop up form for deleting pets -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelectorAll('.deletePetBtn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const petId = this.getAttribute('data-pet-id');
+                            fetch(`/guest/pets/${petId}`, {
+                                method: 'DELETE',
+                                credentials: "include"
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        // Remove the pet element from the DOM
+                                        document.getElementById(`petItem_${petId}`).remove();
+
+                                        // Check if there are any pets left
+                                        const remainingPets = document.querySelectorAll('.list-group-item[id^="petItem_"]');
+                                        if (remainingPets.length === 0) {
+                                            // If no pets left, show "No Registered Pets"
+                                            const petsList = document.querySelector('.list-group');
+                                            petsList.innerHTML = '<li class="list-group-item">No Registered Pets</li>';
+                                        }
+                                    } else {
+                                        // Handle failure
+                                        alert('Failed to delete the pet. Please try again.');
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                    });
+                });
+            </script>

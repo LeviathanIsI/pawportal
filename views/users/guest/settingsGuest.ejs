@@ -1,9 +1,9 @@
 <%- include("../../partials/header.ejs") %>
     <%- include("../../partials/guestNav.ejs") %>
         <div class="settingsleft">
-            <h1>Settings</h1>
+            <h1>Your Information</h1>
             <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">Name <span
+                <li class="list-group-item d-flex justify-content-between align-items-center">Username <span
                         class="ms-auto">
                         <%= currentUser.userName %>
                     </span>
@@ -13,29 +13,16 @@
                         <%= currentUser.email %>
                     </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">Residential Address <span
-                        class="ms-auto">
+                <li class="list-group-item d-flex justify-content-between align-items-center">Residential Address
+                    <span class="ms-auto address-padding" id="userAddress">
                         <%= currentUser.address %>
-                    </span> <a href="#" onclick="openForm()">Edit</a>
+                            <br>
+                            <%= currentUser.city %>,
+                                <%= currentUser.state %>
+                                    <%= currentUser.zip %>
+                    </span>
+                    <button type="button" onclick="openForm()" class="btn btn-primary btn-sm">Edit</button>
                 </li>
-                <li class="list-group-item">
-                    Registered Pets
-                    <% if (currentUser.pets && currentUser.pets.length> 0) { %>
-                        <ul>
-                            <% currentUser.pets.forEach(function(pet) { %>
-                                <li id="petItem_<%= pet._id %>">
-                                    <%= pet.name %>
-                                        <button class="deletePetBtn" data-pet-id="<%= pet._id %>">DELETE</button>
-                                </li>
-                                <% }); %>
-                        </ul>
-                        <% } else { %>
-                            <span class="ms-auto">No pets registered</span>
-                            <% } %>
-                                <a href="/guest/pets/add">Add Pets</a>
-                </li>
-
-
                 <li class="list-group-item">
                     <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
                 </li>
@@ -55,29 +42,44 @@
                 <span class="close-btn" onclick="closeForm()">&times;</span>
                 <h2>Update Residential Address</h2>
                 <form id="updateAddressForm" action="/guest/settings" method="POST">
-                    <label for="address">New Address:</label>
-                    <input type="text" id="address" name="address">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" required>
+                    <label for="zip">Zip:</label>
+                    <input type="text" id="zip" name="zip" required>
                     <button type="submit">Update</button>
                 </form>
             </div>
         </div>
+
         <% include("../../partials/footer.ejs") %>
 
+            <!-- Script for handling pop up form for updating residential address -->
             <script>
-                function openForm() {
+                // Define openForm and closeForm functions globally
+                window.openForm = function () {
                     document.getElementById("popupForm").style.display = "block";
-                }
+                };
 
-                function closeForm() {
+                window.closeForm = function () {
                     document.getElementById("popupForm").style.display = "none";
-                }
+                };
+
+                // Continue with your existing script
                 document.addEventListener("DOMContentLoaded", function () {
                     document.getElementById("updateAddressForm").addEventListener("submit", function (event) {
                         event.preventDefault();
 
                         const formData = new FormData(this);
-                        const address = formData.get("address");
-                        const data = { address: address };
+                        const data = {
+                            address: formData.get("address"),
+                            city: formData.get("city"),
+                            state: formData.get("state"),
+                            zip: formData.get("zip")
+                        };
 
                         fetch("/guest/settings", {
                             method: "POST",
@@ -93,36 +95,19 @@
                                 return response.json();
                             })
                             .then(data => {
-                                console.log(data);
-                                closeForm();
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                            });
-                    });
-                });
-            </script>
+                                if (data.success) {
+                                    const newAddressString = `${data.address}<br>${data.city}, ${data.state} ${data.zip}`;
+                                    document.getElementById('userAddress').innerHTML = newAddressString;
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    document.querySelectorAll('.deletePetBtn').forEach(button => {
-                        button.addEventListener('click', function () {
-                            const petId = this.getAttribute('data-pet-id');
-                            fetch(`/guest/pets/${petId}`, {
-                                method: 'DELETE',
-                                credentials: "include"
+                                    closeForm();
+                                } else {
+                                    throw new Error(data.message || 'Failed to update the address.');
+                                }
                             })
-                                .then(response => {
-                                    if (response.ok) {
-                                        // Remove the pet element from the DOM
-                                        document.getElementById(`petItem_${petId}`).remove();
-                                    } else {
-                                        // Handle failure
-                                        alert('Failed to delete the pet. Please try again.');
-                                    }
-                                })
-                                .catch(error => console.error('Error:', error));
-                        });
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Failed to update the address. Please try again.');
+                            });
                     });
                 });
             </script>
