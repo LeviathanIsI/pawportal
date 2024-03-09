@@ -12,7 +12,7 @@ router.get("/login", (req, res) => {
 
 router.delete("/logout", (req, res) => {
   req.session.destroy(() => {
-    res.redirect("/home");
+    res.redirect("/");
   });
 });
 

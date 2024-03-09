@@ -5,26 +5,29 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        </ul>
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/guest/settings">Settings</a>
-            </li>
-            <li class="nav-item">
-                <form action="/sessions/login" class="form-inline">
-                    <button type="submit" class="btn btn-default">Login</button>
-                </form>
-            </li>
-            <li class="nav-item">
-                <% if (currentUser && currentUser.userName) { %>
-                    <span class="nav-link">Welcome back, <strong>
-                            <%= currentUser.userName %>
-                        </strong></span>
-                    <% } else { %>
-                        <span class="nav-link">Welcome, <strong>Guest</strong></span>
-                        <% } %>
-            </li>
-        </ul>
-    </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/pricing">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <form action="/sessions/login" class="form-inline">
+                        <button type="submit" class="btn btn-default">Login</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="/signup">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <% if (currentUser && currentUser.userName) { %>
+                        <span class="nav-link">Welcome back, <strong>
+                                <%= currentUser.userName %>
+                            </strong></span>
+                        <% } else { %>
+                            <span class="nav-link">Welcome, <strong>Guest</strong></span>
+                            <% } %>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
