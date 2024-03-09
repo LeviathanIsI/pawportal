@@ -1,5 +1,6 @@
 // Required modules
 require("dotenv").config();
+const multer = require("multer");
 const path = require("path");
 const express = require("express");
 const livereload = require("livereload");
@@ -60,6 +61,7 @@ app.use(
     cookie: { maxAge: 86400000 },
   })
 );
+app.use("/uploads", express.static("uploads"));
 
 app.use("/guest", guestCtrl);
 app.use("/employee", userCtrl);
@@ -126,6 +128,9 @@ app.post("/", async (req, res) => {
 // Edit Route
 
 // Show Route
+app.get("/pricing", (req, res) => {
+  res.render("./users/pricing.ejs", { currentUser: req.session.currentUser });
+});
 
 // Catch-all
 app.get("*", function (req, res) {

@@ -1,9 +1,25 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const path = require("path");
 const db = require("../models");
 const isAuthenticated = require("./isAuthenticated");
 const checkGuest = require("./isGuest");
 const { Guest } = db;
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
 
@@ -104,31 +120,40 @@ router.post("/settings", isAuthenticated, checkGuest, async (req, res) => {
 // Initial user creation handled in server.js
 
 // Create route for adding a pet
-router.post("/pets/add", isAuthenticated, checkGuest, async (req, res) => {
-  const { name, species, breed, age, weight } = req.body;
-  try {
-    const newPet = await db.Pet.create({
-      name,
-      species,
-      breed,
-      age,
-      weight,
-    });
+router.post(
+  "/pets/add",
+  isAuthenticated,
+  checkGuest,
+  upload.single("petImage"),
+  async (req, res) => {
+    const { name, species, breed, age, weight } = req.body;
+    let petImage = req.file ? req.file.path : null;
+    petImage = petImage.replace(/\\/g, "/");
+    try {
+      const newPet = await db.Pet.create({
+        name,
+        species,
+        breed,
+        age,
+        weight,
+        image: petImage,
+      });
 
-    const updatedGuest = await db.Guest.findByIdAndUpdate(
-      req.session.currentUser._id,
-      { $push: { pets: newPet._id } },
-      { new: true }
-    ).populate("pets");
+      const updatedGuest = await db.Guest.findByIdAndUpdate(
+        req.session.currentUser._id,
+        { $push: { pets: newPet._id } },
+        { new: true }
+      ).populate("pets");
 
-    req.session.currentUser = updatedGuest;
+      req.session.currentUser = updatedGuest;
 
-    res.redirect("/guest/home");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error creating pet. Please try again.");
+      res.redirect("/guest/home");
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Error creating pet. Please try again.");
+    }
   }
-});
+);
 
 // Edit Route
 router.get("/settings", isAuthenticated, checkGuest, (req, res) => {

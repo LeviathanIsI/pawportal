@@ -1,0 +1,59 @@
+<%- include("../partials/header.ejs") %>
+    <% if (currentUser && currentUser.kind==='Employee' ) { %>
+        <%- include("../partials/employeeNav.ejs") %>
+            <% } else if (currentUser && currentUser.kind==='Guest' ) { %>
+                <%- include("../partials/guestNav.ejs") %>
+                    <% } else { %>
+                        <%- include("../partials/loginNav.ejs") %>
+                            <% } %>
+
+                                <div class="container py-5">
+                                    <h2 class="text-center mb-4">Pricing Plans</h2>
+                                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                                        <div class="col">
+                                            <div class="card h-100 text-center">
+                                                <div class="card-header">
+                                                    Basic
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">$9.99/month</h5>
+                                                    <p class="card-text">Access to basic features.</p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="#" class="btn btn-primary">Subscribe</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card h-100 text-center">
+                                                <div class="card-header">
+                                                    Pro
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">$29.99/month</h5>
+                                                    <p class="card-text">Everything in Basic, plus advanced features.
+                                                    </p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="#" class="btn btn-primary">Subscribe</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card h-100 text-center">
+                                                <div class="card-header">
+                                                    Premium
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">$59.99/month</h5>
+                                                    <p class="card-text">All features in Pro, plus priority support.</p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="#" class="btn btn-primary">Subscribe</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%- include("../partials/footer.ejs") %>
