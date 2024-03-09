@@ -1,56 +1,61 @@
 <%- include("../../partials/header.ejs") %>
     <%- include("../../partials/guestNav.ejs") %>
-        <div class="settingsleft">
-            <h1>Your Information</h1>
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">Username <span
-                        class="ms-auto">
-                        <%= currentUser.userName %>
-                    </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">Email <span
-                        class="ms-auto">
-                        <%= currentUser.email %>
-                    </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">Residential Address
-                    <span class="ms-auto address-padding" id="userAddress">
-                        <%= currentUser.address %>
-                            <br>
-                            <%= currentUser.city %>,
-                                <%= currentUser.state %>
-                                    <%= currentUser.zip %>
-                    </span>
-                    <button type="button" onclick="openForm()" class="btn btn-primary btn-sm">Edit</button>
-                </li>
-                <li class="list-group-item">
-                    <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
-                </li>
-                <li class="list-group-item">
-                    <form action="/sessions/logout?_method=DELETE" method="POST">
-                        <button type="submit" class="signout btn btn-default">
-                            <strong>Sign Out</strong>
-                        </button>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <h1>Your Information</h1>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item">Username: <span class="float-end">
+                                <%= currentUser.userName %>
+                            </span></li>
+                        <li class="list-group-item">Email: <span class="float-end">
+                                <%= currentUser.email %>
+                            </span></li>
+                        <li class="list-group-item">
+                            Residential Address:
+                            <div class="d-flex justify-content-between">
+                                <span id="userAddress">
+                                    <%= currentUser.address %><br>
+                                        <%= currentUser.city %>, <%= currentUser.state %>
+                                                <%= currentUser.zip %>
+                                </span>
+                                <button type="button" onclick="openForm()" class="btn btn-primary btn-sm">Edit</button>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="/guest/settings/password" class="btn btn-secondary">Change Password</a>
+                    <form action="/sessions/logout?_method=DELETE" method="POST" class="mt-3">
+                        <button type="submit" class="btn btn-danger">Sign Out</button>
                     </form>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
 
         <!-- Pop-up Form Container for Residential Address -->
         <div id="popupForm" class="popup-container" style="display:none;">
-            <div class="popup-content">
-                <span class="close-btn" onclick="closeForm()">&times;</span>
-                <h2>Update Residential Address</h2>
+            <div class="popup-content p-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h2>Update Address</h2>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="closeForm()"></button>
+                </div>
                 <form id="updateAddressForm" action="/guest/settings" method="POST">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" name="address" required>
-                    <label for="city">City:</label>
-                    <input type="text" id="city" name="city" required>
-                    <label for="state">State:</label>
-                    <input type="text" id="state" name="state" required>
-                    <label for="zip">Zip:</label>
-                    <input type="text" id="zip" name="zip" required>
-                    <button type="submit">Update</button>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address:</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="city" class="form-label">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="state" class="form-label">State:</label>
+                        <input type="text" class="form-control" id="state" name="state" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="zip" class="form-label">Zip:</label>
+                        <input type="text" class="form-control" id="zip" name="zip" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
         </div>

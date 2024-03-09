@@ -2,21 +2,20 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const db = require("../models");
 const isAuthenticated = require("./isAuthenticated");
-const checkEmployee = require("./isUser");
+const checkGuest = require("./isGuest");
 const { Guest } = db;
-const { Pet } = db;
 
 // I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
 
 // Index Route
-router.get("/home", isAuthenticated, (req, res) => {
+router.get("/home", isAuthenticated, checkGuest, (req, res) => {
   res.render("users/guest/homeGuest.ejs", {
     currentUser: req.session.currentUser,
   });
 });
 
 // Settings Index
-router.get("/settings", isAuthenticated, async (req, res) => {
+router.get("/settings", isAuthenticated, checkGuest, async (req, res) => {
   const currentUser = await db.Guest.findById(
     req.session.currentUser._id
   ).populate("pets");
@@ -29,14 +28,14 @@ router.get("/settings", isAuthenticated, async (req, res) => {
 // Initial user creation handled in server.js
 
 // New Route for adding a pet
-router.get("/home/add", isAuthenticated, (req, res) => {
+router.get("/home/add", isAuthenticated, checkGuest, (req, res) => {
   res.render("users/guest/addpetGuest.ejs", {
     currentUser: req.session.currentUser,
   });
 });
 
 // Delete Route
-router.delete("/pets/:petId", isAuthenticated, async (req, res) => {
+router.delete("/pets/:petId", isAuthenticated, checkGuest, async (req, res) => {
   const { petId } = req.params;
   try {
     // Remove the pet from the Pets collection
@@ -62,7 +61,7 @@ router.delete("/pets/:petId", isAuthenticated, async (req, res) => {
 });
 
 // Update Route
-router.post("/settings", isAuthenticated, async (req, res) => {
+router.post("/settings", isAuthenticated, checkGuest, async (req, res) => {
   const { address, city, state, zip } = req.body;
   const userId = req.session.currentUser._id;
 
@@ -105,7 +104,7 @@ router.post("/settings", isAuthenticated, async (req, res) => {
 // Initial user creation handled in server.js
 
 // Create route for adding a pet
-router.post("/pets/add", isAuthenticated, async (req, res) => {
+router.post("/pets/add", isAuthenticated, checkGuest, async (req, res) => {
   const { name, species, breed, age, weight } = req.body;
   try {
     const newPet = await db.Pet.create({
@@ -132,7 +131,7 @@ router.post("/pets/add", isAuthenticated, async (req, res) => {
 });
 
 // Edit Route
-router.get("/settings", isAuthenticated, (req, res) => {
+router.get("/settings", isAuthenticated, checkGuest, (req, res) => {
   res.render("users/guest/settingsGuest.ejs", {
     currentUser: req.session.currentUser,
     pets: req.session.currentUser.pets,
@@ -140,7 +139,7 @@ router.get("/settings", isAuthenticated, (req, res) => {
 });
 
 // Show Route
-router.get("/pets/:petId", isAuthenticated, async (req, res) => {
+router.get("/pets/:petId", isAuthenticated, checkGuest, async (req, res) => {
   const { petId } = req.params;
   const pet = await db.Pet.findById(petId);
   res.render("users/guest/petGuestShow.ejs", {
