@@ -128,7 +128,9 @@ router.post(
   async (req, res) => {
     const { name, species, breed, age, weight } = req.body;
     let petImage = req.file ? req.file.path : null;
-    petImage = petImage.replace(/\\/g, "/");
+    if (petImage) {
+      petImage = petImage.replace(/\\/g, "/");
+    }
     try {
       const newPet = await db.Pet.create({
         name,

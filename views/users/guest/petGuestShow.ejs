@@ -4,24 +4,26 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
-                        <img src="/<%= pet.image %>" class="card-img-top" alt="<%= pet.name %>">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">
-                                <%= pet.name %>
-                            </h5>
-                            <p class="card-text"><strong>Species:</strong>
-                                <%= pet.species %>
-                            </p>
-                            <p class="card-text"><strong>Breed:</strong>
-                                <%= pet.breed %>
-                            </p>
-                            <p class="card-text"><strong>Age:</strong>
-                                <%= pet.age %> years
-                            </p>
-                            <p class="card-text"><strong>Weight:</strong>
-                                <%= pet.weight %> lbs
-                            </p>
-                        </div>
+                        <% if (pet.image) { %>
+                            <img src="/<%= pet.image %>" class="card-img-top" alt="<%= pet.name %>">
+                            <% } %>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">
+                                        <%= pet.name %>
+                                    </h5>
+                                    <p class="card-text"><strong>Species:</strong>
+                                        <%= pet.species %>
+                                    </p>
+                                    <p class="card-text"><strong>Breed:</strong>
+                                        <%= pet.breed %>
+                                    </p>
+                                    <p class="card-text"><strong>Age:</strong>
+                                        <%= pet.age %> years
+                                    </p>
+                                    <p class="card-text"><strong>Weight:</strong>
+                                        <%= pet.weight %> lbs
+                                    </p>
+                                </div>
                     </div>
                 </div>
             </div>

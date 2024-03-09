@@ -22,7 +22,15 @@ router.post("/", async (req, res) => {
     if (!foundUser) {
       return res.send('<a href="/">Sorry, no user found </a>');
     } else if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-      req.session.currentUser = foundUser;
+      if (foundUser.kind === "Guest") {
+        const guestWithPets = await Guest.findById(foundUser._id).populate(
+          "pets"
+        );
+        req.session.currentUser = guestWithPets.toObject();
+      } else {
+        req.session.currentUser = foundUser.toObject();
+      }
+
       switch (foundUser.kind) {
         case "Guest":
           res.redirect("/guest/home");
