@@ -27,6 +27,28 @@ router.get("/home", isAuthenticated, checkEmployee, async (req, res) => {
   }
 });
 
+// Settings Index
+router.get("/settings", isAuthenticated, checkEmployee, async (req, res) => {
+  const currentUser = await db.Guest.findById(req.session.currentUser._id);
+  res.render("users/employee/settingsEmployee.ejs", {
+    currentUser: req.session.currentUser,
+  });
+});
+
+// Database route
+router.get("/database", isAuthenticated, checkEmployee, async (req, res) => {
+  try {
+    const guests = await db.Guest.find({});
+    res.render("users/employee/databaseEmployee.ejs", {
+      guests: guests,
+      currentUser: req.session.currentUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching guest data");
+  }
+});
+
 // New Route
 // Initial user creation handled in server.js
 

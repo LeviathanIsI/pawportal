@@ -1,5 +1,11 @@
 <%- include("./partials/header.ejs") %>
-    <%- include("./partials/loginNav.ejs") %>
+    <% if (currentUser && currentUser.kind==='Employee' ) { %>
+        <%- include("./partials/employeeNav.ejs") %>
+            <% } else if (currentUser && currentUser.kind==='Guest' ) { %>
+                <%- include("./partials/guestNav.ejs") %>
+                    <% } else { %>
+                        <%- include("./partials/loginNav.ejs") %>
+                            <% } %>
 
         <div class="container mt-5">
             <h1 class="display-4 text-center">BarkBase</h1>

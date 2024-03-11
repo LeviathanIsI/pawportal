@@ -1,4 +1,35 @@
 <%- include("../../partials/header.ejs") %>
     <%- include("../../partials/employeeNav.ejs") %>
-        <h1>Employee Home Page</h1>
+
+        <div class="container my-5">
+            <h1 class="text-center">Employee Dashboard</h1>
+            <h2 class="text-center mb-4">Pets Under Your Care</h2>
+
+            <% if (currentUser.caringFor && currentUser.caringFor.length> 0) { %>
+                <div class="row">
+                    <% currentUser.caringFor.forEach(function(pet) { %>
+                        <div class="col-md-4 mb-4">
+                            <div class="card" style="width: 18rem;">
+                                <img src="/<%= pet.image %>" class="card-img-top" alt="<%= pet.name %>">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= pet.name %>
+                                    </h5>
+                                    <p class="card-text">Species: <%= pet.species %>
+                                    </p>
+                                    <p class="card-text">Breed: <%= pet.breed %>
+                                    </p>
+                                    <p class="card-text">Age: <%= pet.age %> years</p>
+                                    <p class="card-text">Weight: <%= pet.weight %> lbs</p>
+                                    <!-- Add more pet details as needed -->
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } else { %>
+                    <p>No pets under your care at the moment.</p>
+                    <% } %>
+        </div>
+
         <% include("../../partials/footer.ejs") %>
