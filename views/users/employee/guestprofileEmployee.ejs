@@ -1,0 +1,46 @@
+<%- include("../../partials/header.ejs") %>
+    <%- include("../../partials/employeeNav.ejs") %>
+
+        <div class="container mt-5">
+            <h2 class="mb-4 text-center">Guest Information</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Guest Details</h5>
+                    <p class="card-text"><strong>First Name:</strong>
+                        <%= guest.firstName %>
+                    </p>
+                    <p class="card-text"><strong>Last Name:</strong>
+                        <%= guest.lastName %>
+                    </p>
+                    <p class="card-text"><strong>Email:</strong>
+                        <%= guest.email %>
+                    </p>
+                    <p class="card-text"><strong>Address:</strong>
+                        <%= guest.address %>
+                    </p>
+                    <p class="card-text"><strong>City:</strong>
+                        <%= guest.city %>
+                    </p>
+                    <p class="card-text"><strong>State:</strong>
+                        <%= guest.state %>
+                    </p>
+                    <p class="card-text"><strong>Zip:</strong>
+                        <%= guest.zip %>
+                    </p>
+                    <h6 class="mt-4">Registered Pets</h6>
+                    <% if (guest.pets && guest.pets.length> 0) { %>
+                        <ul>
+                            <% guest.pets.forEach(function(pet) { %>
+                                <li>
+                                    <%= pet.name %> - <%= pet.species %>
+                                </li>
+                                <% }); %>
+                        </ul>
+                        <% } else { %>
+                            <p>No registered pets.</p>
+                            <% } %>
+                </div>
+            </div>
+        </div>
+
+        <% include("../../partials/footer.ejs") %>

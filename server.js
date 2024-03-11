@@ -29,6 +29,7 @@ const guestCtrl = require("./controllers/guestController");
 const userCtrl = require("./controllers/userController");
 const sessionCtrl = require("./controllers/sessionsController");
 const petCtrl = require("./controllers/petController");
+const seedController = require("./controllers/seedController");
 
 // Create express app
 const app = express();
@@ -67,6 +68,7 @@ app.use("/guest", guestCtrl);
 app.use("/employee", userCtrl);
 app.use("/sessions", sessionCtrl);
 app.use("/pet", petCtrl);
+app.use("/", seedController);
 
 // I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
 

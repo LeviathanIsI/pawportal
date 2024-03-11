@@ -13,7 +13,10 @@
                         <%= currentUser.email %>
                     </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">Pets Under Your Care</li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">Pets Under Your Care <span
+                        class="ms-auto">
+                        <%= currentUser.caringFor %>
+                    </span></li>
                 <li class="list-group-item">
                     <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
                 </li>

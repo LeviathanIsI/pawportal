@@ -87,5 +87,22 @@ router.post("/settings", isAuthenticated, checkEmployee, async (req, res) => {
 // Edit Route
 
 // Show Route
+router.get("/guests/:id", isAuthenticated, checkEmployee, async (req, res) => {
+  const guestId = req.params.id;
+  try {
+    const guest = await db.Guest.findById(req.params.id).populate("pets");
+    if (!guest) {
+      console.error("Guest not found");
+      return res.status(404).send("Guest not found");
+    }
+    res.render("users/employee/guestprofileEmployee.ejs", {
+      guest: guest,
+      currentUser: req.session.currentUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching guest data");
+  }
+});
 
 module.exports = router;

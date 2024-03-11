@@ -36,7 +36,9 @@
                                 <td>
                                     <%= guest.pets.length %>
                                 </td>
-                                <!-- Add more data cells as needed -->
+                                <td>
+                                    <a href="/employee/guests/<%= guest._id %>" class="btn btn-info">View Record</a>
+                                </td>
                             </tr>
                             <% }); %>
                     </tbody>
