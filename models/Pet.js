@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const PetSchema = new Schema({
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "Guest",
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -23,6 +28,13 @@ const PetSchema = new Schema({
     required: true,
   },
   image: { type: String, required: false },
+  notes: { type: String, required: false },
+  medications: { type: String, required: false },
+  specialNeeds: { type: String, required: false },
+  feedingInstructions: { type: String, required: false },
+  behavior: { type: String, required: false },
+  lastVetVisit: { type: Date, required: false },
+  nextVetVisit: { type: Date, required: false },
 });
 
 module.exports = mongoose.model("Pet", PetSchema);

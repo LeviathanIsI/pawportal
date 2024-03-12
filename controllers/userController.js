@@ -55,38 +55,89 @@ router.get("/database", isAuthenticated, checkEmployee, async (req, res) => {
 // Delete Route
 
 // Update Route
-router.post("/settings", isAuthenticated, checkEmployee, async (req, res) => {
-  const { address, city, state, zip } = req.body;
-  const employeeId = req.session.currentUser._id;
 
+// Update Pet Information
+router.post("/pets/:id/update", isAuthenticated, async (req, res) => {
+  const {
+    name,
+    age,
+    weight,
+    medications,
+    specialNeeds,
+    feedingInstructions,
+    behavior,
+    lastVetVisit,
+    nextVetVisit,
+  } = req.body;
   try {
-    const updatedEmployee = await Employee.findByIdAndUpdate(
-      employeeId,
-      {
-        address,
-        city,
-        state,
-        zip,
-      },
-      { new: true }
-    );
-
-    // Update session with new employee data
-    req.session.currentUser = updatedEmployee.toObject();
-
-    res.redirect("/employee/home"); // Redirect to employee home with updated info
+    await db.Pet.findByIdAndUpdate(req.params.id, {
+      name,
+      age,
+      weight,
+      medications,
+      specialNeeds,
+      feedingInstructions,
+      behavior,
+      lastVetVisit,
+      nextVetVisit,
+    });
+    res.redirect(`/employee/pets/${req.params.id}`);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Failed to update employee settings");
+    res.status(500).send("Failed to update pet");
   }
 });
+
+// Add pet to employee's care
+router.post(
+  "/pets/:id/add",
+  isAuthenticated,
+  checkEmployee,
+  async (req, res) => {
+    try {
+      const employee = await db.Employee.findById(req.session.currentUser._id);
+      const pet = await db.Pet.findById(req.params.id);
+      employee.caringFor.push(pet);
+      await employee.save();
+      res.redirect("/employee/home");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Failed to add pet to employee's care");
+    }
+  }
+);
 
 // Create Route
 // Initial user creation handled in server.js
 
 // Edit Route
+router.get(
+  "/pets/:id/edit",
+  isAuthenticated,
+  checkEmployee,
+  async (req, res) => {
+    const petId = req.params.id;
+    try {
+      const pet = await db.Pet.findById(petId);
+      if (!pet) {
+        console.error("Pet not found");
+        return res.status(404).send("Pet not found");
+      }
+
+      res.render("users/employee/editPetEmployee.ejs", {
+        pet: pet,
+        currentUser: req.session.currentUser,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("An error occurred while fetching pet data");
+    }
+  }
+);
 
 // Show Route
+
+// Show Guest Profile
 router.get("/guests/:id", isAuthenticated, checkEmployee, async (req, res) => {
   const guestId = req.params.id;
   try {
@@ -102,6 +153,25 @@ router.get("/guests/:id", isAuthenticated, checkEmployee, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching guest data");
+  }
+});
+
+// Show Pet Profile
+router.get("/pets/:id", isAuthenticated, checkEmployee, async (req, res) => {
+  const petId = req.params.id;
+  try {
+    const pet = await db.Pet.findById(req.params.id).populate("owner");
+    if (!pet) {
+      console.error("Pet not found");
+      return res.status(404).send("Pet not found");
+    }
+    res.render("users/employee/petprofileEmployee.ejs", {
+      pet: pet,
+      currentUser: req.session.currentUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching pet data");
   }
 });
 

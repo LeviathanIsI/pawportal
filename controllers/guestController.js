@@ -133,6 +133,7 @@ router.post(
     }
     try {
       const newPet = await db.Pet.create({
+        owner: req.session.currentUser,
         name,
         species,
         breed,

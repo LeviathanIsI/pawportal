@@ -33,6 +33,13 @@
                             <% guest.pets.forEach(function(pet) { %>
                                 <li>
                                     <%= pet.name %> - <%= pet.species %>
+                                            <a href="/employee/pets/<%= pet._id %>" class="btn btn-info btn-sm">View</a>
+                                            <form action="/employee/pets/<%= pet._id %>/add" method="POST"
+                                                style="display: inline;">
+                                                <input type="hidden" name="petId" value="<%= pet._id %>">
+                                                <button type="submit" class="btn btn-warning btn-sm">Add to my
+                                                    care</button>
+                                            </form>
                                 </li>
                                 <% }); %>
                         </ul>
@@ -44,3 +51,5 @@
         </div>
 
         <% include("../../partials/footer.ejs") %>
+
+            <!-- Check out MOMENT for date formatting -->

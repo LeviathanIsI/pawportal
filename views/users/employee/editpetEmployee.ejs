@@ -1,0 +1,48 @@
+<%- include("../../partials/header.ejs") %>
+    <%- include("../../partials/employeeNav.ejs") %>
+
+        <div class="container mt-4">
+            <h2>Edit Pet Information</h2>
+            <form action="/employee/pets/<%= pet._id %>/update" method="POST">
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age:</label>
+                    <input type="number" class="form-control" id="age" name="age" value="<%= pet.age %>">
+                </div>
+                <div class="mb-3">
+                    <label for="weight" class="form-label">Weight:</label>
+                    <input type="number" class="form-control" id="weight" name="weight" value="<%= pet.weight %>">
+                </div>
+                <div class="mb-3">
+                    <label for="medications" class="form-label">Medications:</label>
+                    <input type="string" class="form-control" id="medications" name="medications"
+                        value="<%= pet.medications %>">
+                </div>
+                <div class="mb-3">
+                    <label for="specialNeeds" class="form-label">Special Needs:</label>
+                    <input type="string" class="form-control" id="specialNeeds" name="specialNeeds"
+                        value="<%= pet.specialNeeds %>">
+                </div>
+                <div class="mb-3">
+                    <label for="feedingInstructions" class="form-label">Feeding Instructions:</label>
+                    <input type="string" class="form-control" id="feedingInstructions" name="feedingInstructions"
+                        value="<%= pet.feedingInstructions %>">
+                </div>
+                <div class="mb-3">
+                    <label for="behavior" class="form-label">Behavior:</label>
+                    <input type="string" class="form-control" id="behavior" name="behavior" value="<%= pet.behavior %>">
+                </div>
+                <div class="mb-3">
+                    <label for="lastVetVisit" class="form-label">Last Vet Visit:</label>
+                    <input type="date" class="form-control" id="lastVetVisit" name="lastVetVisit"
+                        value="<%= pet.lastVetVisit %>">
+                </div>
+                <div class="mb-3">
+                    <label for="nextVetVisit" class="form-label">Next Vet Visit:</label>
+                    <input type="date" class="form-control" id="nextVetVisit" name="nextVetVisit"
+                        value="<%= pet.nextVetVisit %>">
+                </div>
+                <button type=" submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+
+        <% include("../../partials/footer.ejs") %>
