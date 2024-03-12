@@ -41,6 +41,10 @@
                     <input type="date" class="form-control" id="nextVetVisit" name="nextVetVisit"
                         value="<%= pet.nextVetVisit %>">
                 </div>
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notes: </label>
+                    <input type="string" class="form-control" id="notes" name="notes" value="<%= pet.notes %>">
+                </div>
                 <button type=" submit" class="btn btn-primary">Update</button>
             </form>
         </div>

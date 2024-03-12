@@ -68,6 +68,7 @@ router.post("/pets/:id/update", isAuthenticated, async (req, res) => {
     behavior,
     lastVetVisit,
     nextVetVisit,
+    notes,
   } = req.body;
   try {
     await db.Pet.findByIdAndUpdate(req.params.id, {
@@ -80,6 +81,7 @@ router.post("/pets/:id/update", isAuthenticated, async (req, res) => {
       behavior,
       lastVetVisit,
       nextVetVisit,
+      notes,
     });
     res.redirect(`/employee/pets/${req.params.id}`);
   } catch (error) {
