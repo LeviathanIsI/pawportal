@@ -164,7 +164,7 @@ router.get(
         return res.status(404).send("Pet not found");
       }
 
-      res.render("users/employee/editPetEmployee.ejs", {
+      res.render("users/employee/editpetEmployee.ejs", {
         pet: pet,
         currentUser: req.session.currentUser,
       });
