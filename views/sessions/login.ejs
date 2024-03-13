@@ -1,9 +1,23 @@
 <%- include("../partials/header.ejs") %>
     <%- include("../partials/loginNav.ejs") %>
-        <h2>Login</h2>
-        <form action="/sessions" method="POST">
-            Username: <input type="text" name="username" required>
-            Password: <input type="password" name="password" required>
-            <input type="submit" value="Login">
 
-            <% include("../partials/footer.ejs") %>
+        <div class="container py-5">
+            <div class="bg-light p-5 rounded shadow">
+                <h2 class="text-center mb-4">Login</h2>
+                <form action="/sessions" method="POST" class="row g-3 justify-content-center">
+                    <div class="col-12 col-md-6">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="col-12 text-center">
+                        <input type="submit" value="Login" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <%- include("../partials/footer.ejs") %>

@@ -1,56 +1,56 @@
 <%- include("../../partials/header.ejs") %>
     <%- include("../../partials/employeeNav.ejs") %>
+
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card pet-card">
+                    <div class="bg-light p-5 rounded shadow pet-card">
                         <div class="pet-image-wrapper">
                             <% if (pet.image) { %>
                                 <img src="/<%= pet.image %>" class="pet-image" alt="<%= pet.name %>">
                                 <% } %>
                         </div>
-                        <div class="card-body text-center">
-                            <h5 class="card-title first-text">
+                        <div class="text-center mt-4">
+                            <h2 class="first-text">
                                 <%= pet.name %>
-                            </h5>
-                            <p class="card-text"><strong>Species:</strong>
+                            </h2>
+                            <p><strong>Species:</strong>
                                 <%= pet.species %>
                             </p>
-                            <p class="card-text"><strong>Breed:</strong>
+                            <p><strong>Breed:</strong>
                                 <%= pet.breed %>
                             </p>
-                            <p class="card-text"><strong>Age:</strong>
+                            <p><strong>Age:</strong>
                                 <%= pet.age %> years
                             </p>
-                            <p class="card-text"><strong>Weight:</strong>
+                            <p><strong>Weight:</strong>
                                 <%= pet.weight %> lbs
                             </p>
-                            <p class="card-text"><strong>Medications:</strong>
+                            <p><strong>Medications:</strong>
                                 <%= pet.medications %>
                             </p>
-                            <p class="card-text"><strong>Special Needs:</strong>
+                            <p><strong>Special Needs:</strong>
                                 <%= pet.specialNeeds %>
                             </p>
-                            <p class="card-text"><strong>Feeding Instructions:</strong>
+                            <p><strong>Feeding Instructions:</strong>
                                 <%= pet.feedingInstructions %>
                             </p>
-                            <p class="card-text"><strong>Behavior:</strong>
+                            <p><strong>Behavior:</strong>
                                 <%= pet.behavior %>
                             </p>
-                            <p class="card-text"><strong>Last Vet Visit:</strong>
+                            <p><strong>Last Vet Visit:</strong>
                                 <%= pet.lastVetVisit %>
                             </p>
-                            <p class="card-text"><strong>Next Vet Visit:</strong>
+                            <p><strong>Next Vet Visit:</strong>
                                 <%= pet.nextVetVisit %>
                             </p>
                         </div>
-                        <div class="card-footer text-center">
-                            <a href="/employee/pets/<%= pet._id %>/edit" class="btn btn-primary">Edit
-                                Information</a>
+                        <div class="text-center mt-4">
+                            <a href="/employee/pets/<%= pet._id %>/edit" class="btn btn-primary">Edit Information</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <% include("../../partials/footer.ejs") %>
+        <%- include("../../partials/footer.ejs") %>
