@@ -16,10 +16,10 @@ const PORT = process.env.PORT || 3000;
 // Require db connection and models
 const db = require("./models");
 
-// Function to generate a random employee ID
+// Generates a random employee ID between 1 and 1000
 const generateEmployeeID = () => Math.floor(Math.random() * 1000);
 
-// Function to check if the employee ID is unique
+// Checks to make sure the employee ID is unique
 const isUniqueEmployeeID = async (employeeID) => {
   const employee = await db.Employee.findOne({ employeeID: employeeID });
   return !employee;
@@ -28,8 +28,6 @@ const isUniqueEmployeeID = async (employeeID) => {
 const guestCtrl = require("./controllers/guestController");
 const userCtrl = require("./controllers/userController");
 const sessionCtrl = require("./controllers/sessionsController");
-const petCtrl = require("./controllers/petController");
-const seedController = require("./controllers/seedController");
 
 // Create express app
 const app = express();
@@ -67,8 +65,6 @@ app.use("/uploads", express.static("uploads"));
 app.use("/guest", guestCtrl);
 app.use("/employee", userCtrl);
 app.use("/sessions", sessionCtrl);
-app.use("/pet", petCtrl);
-app.use("/", seedController);
 
 // I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
 
@@ -104,16 +100,21 @@ app.post("/", async (req, res) => {
       bcrypt.genSaltSync(10)
     );
 
+    // If the user is an employee, generate a unique employee ID
     if (req.body.kind === "Employee") {
       let employeeID = generateEmployeeID();
       let unique = await isUniqueEmployeeID(employeeID);
 
+      // As long as the generated employee ID is not unique, keep generating new ones
       while (!unique) {
         employeeID = generateEmployeeID();
         unique = await isUniqueEmployeeID(employeeID);
       }
+      // Once a unique ID is found assign that ID to the employee object
       req.body.employeeID = employeeID;
     }
+
+    // Creates the new user and redirects them to the appropriate home page
     const newUser = await db.User.create(req.body);
     req.session.currentUser = newUser;
     if (newUser.kind === "Employee") {
@@ -129,7 +130,7 @@ app.post("/", async (req, res) => {
 
 // Edit Route
 
-// Show Route
+// Show Route - Pricing page for all user types
 app.get("/pricing", (req, res) => {
   res.render("./users/pricing.ejs", { currentUser: req.session.currentUser });
 });

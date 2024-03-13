@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
 const db = require("../models");
@@ -7,6 +6,7 @@ const isAuthenticated = require("./isAuthenticated");
 const checkGuest = require("./isGuest");
 const { Guest } = db;
 
+// Initialize multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -23,14 +23,14 @@ const upload = multer({ storage: storage });
 
 // I.N.D.U.C.E.S. - Index, New, Delete, Update, Create, Edit, Show
 
-// Index Route
+// Index Route - Will take guests to their dashboard
 router.get("/home", isAuthenticated, checkGuest, (req, res) => {
   res.render("users/guest/homeGuest.ejs", {
     currentUser: req.session.currentUser,
   });
 });
 
-// Settings Index
+// Settings Index - Will takes guests to their settings page
 router.get("/settings", isAuthenticated, checkGuest, async (req, res) => {
   const currentUser = await db.Guest.findById(
     req.session.currentUser._id
@@ -43,14 +43,14 @@ router.get("/settings", isAuthenticated, checkGuest, async (req, res) => {
 // New Route
 // Initial user creation handled in server.js
 
-// New Route for adding a pet
+// New Route for adding a pet - Take guests to the add pet page
 router.get("/home/add", isAuthenticated, checkGuest, (req, res) => {
   res.render("users/guest/addpetGuest.ejs", {
     currentUser: req.session.currentUser,
   });
 });
 
-// Delete Route
+// Delete Route - Allows guests to remove their pets from their profile and database
 router.delete("/pets/:petId", isAuthenticated, checkGuest, async (req, res) => {
   const { petId } = req.params;
   try {
@@ -62,6 +62,7 @@ router.delete("/pets/:petId", isAuthenticated, checkGuest, async (req, res) => {
       $pull: { pets: petId },
     });
 
+    // Update the session information to ensure the guests pets array is accurate
     const updatedGuest = await db.Guest.findById(
       req.session.currentUser._id
     ).populate("pets");
@@ -95,7 +96,9 @@ router.post("/settings", isAuthenticated, checkGuest, async (req, res) => {
 
     // Update the session information
     req.session.currentUser = {
+      // Use spread operator to grab all the existing key value pairs and copies them to the new object
       ...req.session.currentUser,
+      // This will grab additional properties from the updatedGuest object and overwrite the existing properties
       address,
       city,
       state,
@@ -116,6 +119,45 @@ router.post("/settings", isAuthenticated, checkGuest, async (req, res) => {
   }
 });
 
+// Update pet route
+router.post(
+  "/pets/:id/update",
+  isAuthenticated,
+  checkGuest,
+  async (req, res) => {
+    const {
+      name,
+      age,
+      weight,
+      medications,
+      specialNeeds,
+      feedingInstructions,
+      behavior,
+      lastVetVisit,
+      nextVetVisit,
+      noteContent,
+    } = req.body;
+    try {
+      await db.Pet.findByIdAndUpdate(req.params.id, {
+        name,
+        age,
+        weight,
+        medications,
+        specialNeeds,
+        feedingInstructions,
+        behavior,
+        lastVetVisit,
+        nextVetVisit,
+      });
+
+      res.redirect(`/guest/pets/${req.params.id}`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Failed to update pet");
+    }
+  }
+);
+
 // Create Route
 // Initial user creation handled in server.js
 
@@ -126,8 +168,11 @@ router.post(
   checkGuest,
   upload.single("petImage"),
   async (req, res) => {
+    // Destructure the pet information from the request body
     const { name, species, breed, age, weight } = req.body;
+    // If there is a file, set the petImage to the path, otherwise set it to null
     let petImage = req.file ? req.file.path : null;
+    // If there is a petImage, uses REGEX to replace the backslashes with forward slashes - this is necessary since the file system uses backslashes and the web uses forward slashes
     if (petImage) {
       petImage = petImage.replace(/\\/g, "/");
     }
@@ -158,7 +203,7 @@ router.post(
   }
 );
 
-// Edit Route
+// Edit Route - Allows guests to edit their profile information
 router.get("/settings", isAuthenticated, checkGuest, (req, res) => {
   res.render("users/guest/settingsGuest.ejs", {
     currentUser: req.session.currentUser,
@@ -166,7 +211,27 @@ router.get("/settings", isAuthenticated, checkGuest, (req, res) => {
   });
 });
 
-// Show Route
+// Pet edit route - Allows guests to edit their pet information
+router.get("/pets/:id/edit", isAuthenticated, checkGuest, async (req, res) => {
+  const petId = req.params.id;
+  try {
+    const pet = await db.Pet.findById(petId);
+    if (!pet) {
+      console.error("Pet not found");
+      return res.status(404).send("Pet not found");
+    }
+
+    res.render("users/guest/editpetGuest.ejs", {
+      pet: pet,
+      currentUser: req.session.currentUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching pet data");
+  }
+});
+
+// Show Route - Allows guests to view their pet's information
 router.get("/pets/:petId", isAuthenticated, checkGuest, async (req, res) => {
   const { petId } = req.params;
   const pet = await db.Pet.findById(petId);

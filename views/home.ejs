@@ -1,4 +1,5 @@
 <%- include("./partials/header.ejs") %>
+<!-- Uses logic to display the correct header on the home page depending on if and who is logged in -->
     <% if (currentUser && currentUser.kind==='Employee' ) { %>
         <%- include("./partials/employeeNav.ejs") %>
             <% } else if (currentUser && currentUser.kind==='Guest' ) { %>

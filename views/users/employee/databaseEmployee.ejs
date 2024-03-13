@@ -4,11 +4,13 @@
         <div class="container mt-5">
             <h2 class="mb-4 text-center">Guest Database</h2>
             <div class="mb-3">
+                <!-- Calls the search function everytime the last entry has been placed in the search box -->
                 <input type="text" class="form-control" id="searchBox" placeholder="Search for a guest..."
                     onkeyup="searchFunction()">
             </div>
             <div class="table-responsive">
                 <table class="table">
+                    <!-- Table headers -->
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
@@ -18,6 +20,7 @@
                             <th scope="col">Registered Pets</th>
                         </tr>
                     </thead>
+                    <!-- Table body / Iterates over each guest in the database to display them -->
                     <tbody id="guestList">
                         <% guests.forEach(function(guest, index) { %>
                             <tr>
@@ -48,24 +51,40 @@
 
         <% include("../../partials/footer.ejs") %>
 
+            <!-- Function that takes the search term and interates over the rows to see if the term is found then filters to the rows including the search term -->
             <script>
                 function searchFunction() {
-                    var input, filter, table, tr, td, i, txtValue;
+                    let input, filter, table, tr, td, i, txtValue;
+                    // Grabs the input from the search box
                     input = document.getElementById("searchBox");
+                    // Takes the input value and makes it uppercase for easier comparison
                     filter = input.value.toUpperCase();
+                    // Grabs the table
                     table = document.getElementById("guestList");
+                    // Grabs the rows
                     tr = table.getElementsByTagName("tr");
 
+                    // Iterates over each row
                     for (i = 0; i < tr.length; i++) {
-                        td = tr[i].getElementsByTagName("td")[0]; // Adjust the index based on which column you want to search
-                        if (td) {
-                            txtValue = td.textContent || td.innerText;
-                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                tr[i].style.display = "";
-                            } else {
-                                tr[i].style.display = "none";
+                        // Grabs the cells
+                        tds = tr[i].getElementsByTagName("td");
+                        // Sets the rowContainsQuery to false
+                        let rowContainsQuery = false;
+                        // Iterates over each cell and checks if the search term is found
+                        for (let j = 0; j < tds.length; j++) {
+                            // Grabs the cell
+                            let td = tds[j];
+                            // Grabs the text value of the cell
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                // If the search term is found in the cell, the row is displayed
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    rowContainsQuery = true;
+                                }
                             }
                         }
+                        // If the row contains the query, it is displayed, otherwise it is hidden
+                        tr[i].style.display = rowContainsQuery ? "" : "none";
                     }
                 }
             </script>

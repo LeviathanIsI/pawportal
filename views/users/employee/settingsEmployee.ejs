@@ -1,32 +1,38 @@
 <%- include("../../partials/header.ejs") %>
     <%- include("../../partials/employeeNav.ejs") %>
-        <div class="settingsleft">
-            <h1>Settings</h1>
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">User Name <span
-                        class="ms-auto">
-                        <%= currentUser.userName %>
-                    </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">Email <span
-                        class="ms-auto">
-                        <%= currentUser.email %>
-                    </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">Pets Under Your Care <span
-                        class="ms-auto">
-                        <%= currentUser.caringFor %>
-                    </span></li>
-                <li class="list-group-item">
-                    <a class="changepassword" href="/guest/settings/password"><strong>Change Password</strong></a>
-                </li>
-                <li class="list-group-item">
-                    <form action="/sessions/logout?_method=DELETE" method="POST">
-                        <button type="submit" class="signout btn btn-default">
-                            <strong>Sign Out</strong>
-                        </button>
-                    </form>
-                </li>
-            </ul>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <h1>Settings</h1>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item">Username: <span class="float-end">
+                                <%= currentUser.userName %>
+                            </span></li>
+                        <li class="list-group-item">Employee ID: <span class="float-end">
+                                <%= currentUser.employeeID %>
+                            </span></li>
+                        <li class="list-group-item">Email: <span class="float-end">
+                                <%= currentUser.email %>
+                            </span></li>
+                        <li class="list-group-item">Pets Under Your Care: <span class="float-end">
+                                <% if (currentUser.caringFor && currentUser.caringFor.length>= 0) { %>
+                                    <%= currentUser.caringFor.map(pet=> pet.name).join(', ') %>
+                                        <% } else { %>
+                                            None
+                                            <% } %>
+                            </span></li>
+                        <li class="list-group-item">
+                            <a class="changepassword btn btn-secondary" href="/guest/settings/password">Change
+                                Password</a>
+                        </li>
+                        <li class="list-group-item">
+                            <form action="/sessions/logout?_method=DELETE" method="POST" class="mt-3">
+                                <button type="submit" class="btn btn-danger">Sign Out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
         <% include("../../partials/footer.ejs") %>

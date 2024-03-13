@@ -28,7 +28,7 @@ const PetSchema = new Schema({
     required: true,
   },
   image: { type: String, required: false },
-  notes: { type: String, required: false },
+  notes: [{ type: Schema.Types.ObjectId, ref: "Note" }],
   medications: { type: String, required: false },
   specialNeeds: { type: String, required: false },
   feedingInstructions: { type: String, required: false },

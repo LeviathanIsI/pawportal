@@ -2,7 +2,7 @@
     <%- include("../../partials/employeeNav.ejs") %>
         <div class="container mt-4">
             <h2>Edit Pet Information</h2>
-            <form action="/employee/pets/<%= pet._id %>/update" method="POST">
+            <form action="/guest/pets/<%= pet._id %>/update" method="POST">
                 <div class="mb-3">
                     <label for="age" class="form-label">Age:</label>
                     <input type="number" class="form-control" id="age" name="age" value="<%= pet.age %>">

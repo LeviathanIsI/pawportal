@@ -14,4 +14,5 @@ module.exports = {
   Guest: require("./Guest"),
   Employee: require("./Employee"),
   Pet: require("./Pet"),
+  Note: require("./Note"),
 };
