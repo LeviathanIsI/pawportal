@@ -31,7 +31,7 @@
                     <% if (guest.pets && guest.pets.length> 0) { %>
                         <ul>
                             <% guest.pets.forEach(function(pet) { %>
-                                <li>
+                                <li class="py-2">
                                     <%= pet.name %> - <%= pet.species %>
                                             <a href="/employee/pets/<%= pet._id %>" class="btn btn-info btn-sm">View</a>
                                             <form action="/employee/pets/<%= pet._id %>/add" method="POST"

@@ -15,7 +15,7 @@
                             <%= currentUser.email %>
                         </span></li>
                     <li class="list-group-item">Pets Under Your Care: <span class="float-end">
-                            <% if (currentUser.caringFor && currentUser.caringFor.length>= 0) { %>
+                            <% if (currentUser.caringFor && currentUser.caringFor.length> 0) { %>
                                 <%= currentUser.caringFor.map(pet=> pet.name).join(', ') %>
                                     <% } else { %>
                                         None

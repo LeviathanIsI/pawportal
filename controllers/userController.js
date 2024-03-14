@@ -32,9 +32,16 @@ router.get("/home", isAuthenticated, checkEmployee, async (req, res) => {
 
 // Settings Index - Will take the employee to their settings page
 router.get("/settings", isAuthenticated, checkEmployee, async (req, res) => {
-  const currentUser = await db.Guest.findById(req.session.currentUser._id);
+  const currentUser = await db.User.findById(
+    req.session.currentUser._id
+  ).populate("caringFor");  
+
+  const currentUserUpdated = {
+    ...req.session.currentUser,
+    caringFor: currentUser ? currentUser.caringFor : [],
+  };
   res.render("users/employee/settingsEmployee.ejs", {
-    currentUser: req.session.currentUser,
+    currentUser: currentUserUpdated,
   });
 });
 
