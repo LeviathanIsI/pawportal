@@ -1,39 +1,39 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Home</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        </ul>
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/employee/home">My Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/employee/database">Guest Database</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/pricing">Pricing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/employee/settings">Settings</a>
-            </li>
-            <li class="nav-item">
-                <form action="/sessions/logout?_method=DELETE" method="POST" class="form-inline">
-                    <button type="submit" class="btn btn-default">Sign Out</button>
-                </form>
-            </li>
-            <li class="nav-item">
-                <% if (currentUser && currentUser.userName) { %>
-                    <span class="nav-link">Welcome back, <strong>
-                            <%= currentUser.userName %>
-                        </strong></span>
-                    <% } else { %>
-                        <span class="nav-link">Welcome, <strong>Guest</strong></span>
-                        <% } %>
-            </li>
-        </ul>
-    </div>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/employee/home">My Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employee/database">Guest Database</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pricing">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employee/settings">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <form action="/sessions/logout?_method=DELETE" method="POST" class="form-inline">
+                        <button type="submit" class="btn btn-default">Sign Out</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <% if (currentUser && currentUser.userName) { %>
+                        <span class="nav-link">Welcome back, <strong>
+                                <%= currentUser.userName %>
+                            </strong></span>
+                        <% } else { %>
+                            <span class="nav-link">Welcome, <strong>Guest</strong></span>
+                            <% } %>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
