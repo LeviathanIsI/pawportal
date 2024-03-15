@@ -87,25 +87,14 @@ This project can be used as a visual resource only. This code cannot be copied o
 
 ## License
 
-{
-    "name": "Creative Commons Attribution-NonCommercial (CC-BY-NC)",
-    "priority": 1,
-    "available": true,
-    "url": "http://creativecommons.org/licenses/by-nc/4.0/",
-    "description": "A creative commons license that bans commercial use.",
-    "categories": [
-        "public",
-        "data",
-        "by",
-        "nc"
-    ],
-    "labels": [
-        "public",
-        "cc",
-        "nc"
-    ],
-    "key": "cc-by-nc"
-}
+- **Name**: Creative Commons Attribution-NonCommercial (CC-BY-NC)
+- **Priority**: 1
+- **Available**: Yes
+- **URL**: [CC BY-NC 4.0 License](http://creativecommons.org/licenses/by-nc/4.0/)
+- **Description**: A creative commons license that bans commercial use.
+- **Categories**: `public`, `data`, `by`, `nc`
+- **Labels**: `public`, `cc`, `nc`
+- **Key**: `cc-by-nc`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
