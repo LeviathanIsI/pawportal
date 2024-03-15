@@ -24,7 +24,7 @@
 <h3 align="center">BarkBase</h3>
 
   <p align="center">
-    project_description
+    BarkBase if a full service kennel management software the allows employees and pet owners alike manage pets in the system, update pet information, and track how their pet stays are going. Employees have the ability to track which pets they currently have under their care as well as update the information for those pets as needed.
     <br />
     <a href="https://github.com/LeviathanIsI/barkbase"><strong>Explore the docs »</strong></a>
     <br />
