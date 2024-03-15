@@ -14,13 +14,6 @@
                     <li class="list-group-item">Email: <span class="float-end">
                             <%= currentUser.email %>
                         </span></li>
-                    <li class="list-group-item">Pets Under Your Care: <span class="float-end">
-                            <% if (currentUser.caringFor && currentUser.caringFor.length> 0) { %>
-                                <%= currentUser.caringFor.map(pet=> pet.name).join(', ') %>
-                                    <% } else { %>
-                                        None
-                                        <% } %>
-                        </span></li>
                     <li class="list-group-item">
                         <a class="changepassword btn btn-secondary" href="/guest/settings/password">Change Password</a>
                     </li>
