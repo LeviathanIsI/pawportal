@@ -17,7 +17,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/LeviathanIsI/barkbase">
+  <a href="[https://github.com/LeviathanIsI/barkbase](https://imgur.com/uSgxvre)">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
