@@ -18,7 +18,7 @@
 <br />
 <div align="center">
   <a href="https://barkbase-115eae5ebeda.herokuapp.com/">
-    <img src="https://imgur.com/uSgxvre" alt="Logo" width="80" height="80">
+    <img src="https://i.imgur.com/uSgxvre.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">BarkBase</h3>
