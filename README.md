@@ -73,7 +73,7 @@
 
 ## Getting Started
 
-To view the live page, please navigate [here]https://barkbase-115eae5ebeda.herokuapp.com/
+To view the live page, please navigate [here](https://barkbase-115eae5ebeda.herokuapp.com/)
 
 <!-- USAGE EXAMPLES -->
 
