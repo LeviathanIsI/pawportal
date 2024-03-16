@@ -115,7 +115,7 @@ router.post(
       const employee = await db.Employee.findById(req.session.currentUser._id);
       const petId = req.params.id;
 
-      // Check if the pet is already under the employee's care
+      // Check if the pet is already under the employee's care - .some checks to see if at least one element in the array meets the condition
       const isAlreadyCaringForPet = employee.caringFor.some(
         (pet) => pet.toString() === petId
       );
