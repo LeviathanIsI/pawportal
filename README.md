@@ -102,16 +102,9 @@ This project can be used as a visual resource only. This code cannot be copied o
 ## Contact
 
 Project Link: [https://github.com/LeviathanIsI/barkbase](https://github.com/LeviathanIsI/barkbase)
+[Email](joshua.r.bradford1@gmail.com)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- []()
-- []()
-- []()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
