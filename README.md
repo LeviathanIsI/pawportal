@@ -108,7 +108,7 @@ Project Link: [https://github.com/LeviathanIsI/barkbase](https://github.com/Levi
 
 ## References
 
-- ChatGPT to help with structuring the classes correctly for layout
+- ChatGPT to help with structuring the classes correctly for layout with Bootstrap
 - [StackOverflow](https://stackoverflow.com/questions/38639248/mongoose-model-for-multi-types-of-users#:~:text=I%20found%20a%20better%20way%20of%20doing%20this%20is%20using%20discriminators...thanks!) and [Mongoose documentation](https://mongoosejs.com/docs/discriminators.html) to help set up the Schema discriminators
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
