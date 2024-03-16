@@ -106,6 +106,11 @@ Project Link: [https://github.com/LeviathanIsI/barkbase](https://github.com/Levi
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## References
+
+- ChatGPT to help with structuring the classes correctly for layout
+- StackOverflow and [Mongoose documentation](https://mongoosejs.com/docs/discriminators.html) to help set up the Schema discriminators
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
