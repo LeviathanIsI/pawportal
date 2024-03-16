@@ -93,7 +93,7 @@ app.get("/signup", (req, res) => {
 // Update Route
 
 // Create Route
-app.post("/", async (req, res) => {
+app.post("/signup", async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(
       req.body.password,
